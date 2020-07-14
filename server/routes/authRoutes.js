@@ -11,14 +11,16 @@ module.exports = (app) => {
    );
 
    // Route handler for the callback of the authentication side
-   app.get("/auth/google/callback", passport.authenticate("google"));
+   app.get("/auth/google/callback", passport.authenticate("google"), (req, res) => {
+      res.redirect("/surveys");
+   });
 
    // Route handler which is going to logout the user
    app.get("/api/logout", (req, res) => {
       // Passport attaches a couple of functions to the request objets, such as the logout
       // req.logout will take the cookie that contains the user ID and it kills the ID that's in there
       req.logout();
-      res.send(req.user);
+      res.redirect("/");
    });
 
    // This route will show the client their user id

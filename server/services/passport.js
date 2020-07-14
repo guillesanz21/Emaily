@@ -30,25 +30,24 @@ passport.use(
          clientID: keys.googleClientID, // API Client ID for Google oauth
          clientSecret: keys.googleClientSecret, // API Client Secret for Google oauth
          callbackURL: "/auth/google/callback", // path of our page that will use Google to provide the user code
+         // Heroku uses a proxy to balace the load traffic to the differents pages hosted in the platform
+         // Therefore, we need to specify that Google should trust the proxies:
+         proxy: true,
       },
       // When Google redirect to localhost:5000/auth/google/callback, Google will exchange the code user for the
       // profile of the user and an access token
       // The acess token allow us to do something on the user's behalf. It simply give us access to do certain things
       // The refresh token update the access token when it has expired
-      (accessToken, refreshToken, profile, done) => {
-         User.findOne({ googleId: profile.id }).then((existingUser) => {
-            // If there isn't a user, existingUser will be null
-            if (existingUser) {
-               // We already have a record with the given profile ID
-               done(null, existingUser);
-            } else {
-               // We don't have a user record with this ID, make a new record.
-               new User({ googleId: profile.id })
-                  .save()
-                  .then((user) => done(null, user));
-            }
-            done();
-         });
+      async (accessToken, refreshToken, profile, done) => {
+         const existingUser = await User.findOne({ googleId: profile.id });
+         // If there isn't a user, existingUser will be null
+         if (existingUser) {
+            // We already have a record with the given profile ID
+            return done(null, existingUser);
+         }
+         // We don't have a user record with this ID, make a new record.
+         const user = await new User({ googleId: profile.id }).save();
+         done(null, user);
       }
    )
 );
