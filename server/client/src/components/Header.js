@@ -1,23 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Payments from "./Payments";
 
 class Header extends Component {
    renderContent() {
       switch (this.props.auth) {
+         // When the page is rendering and still don't know if the user is logged in
          case null:
             return;
+         // When the user isn't logged in
          case false:
             return (
                <li>
                   <a href="/auth/google">Login With Google</a>
                </li>
             );
+         // When the user is logged in
          default:
             return (
-               <li>
-                  <a href="/api/logout">Logout</a>
-               </li>
+               <React.Fragment>
+                  <li>
+                     <Payments />
+                  </li>
+                  <li>
+                     <a href="/api/logout">Logout</a>
+                  </li>
+               </React.Fragment>
             );
       }
    }
