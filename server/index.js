@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 
 const keys = require("./config/keys");
 // The next requires isn't assigned to any variable since this file it isn't exporting anything, it's just executing it.
@@ -19,6 +20,7 @@ mongoose
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use(
    cookieSession({
       // maxAge: How long this cookie can exist inside the browser before it expires
@@ -31,6 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require("./routes/authRoutes")(app); // This is invoking the function exported by authRoutes in the routes directory
+require("./routes/billingRoutes")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

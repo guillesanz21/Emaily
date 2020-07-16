@@ -3,6 +3,10 @@ const { Schema } = mongoose; // Equals to: const Schema = mongoose.Schema; (dest
 
 const userSchema = new Schema({
    googleId: String,
+   credits: {
+      type: Number,
+      default: 0,
+   },
 });
 
 // This will load the schema into mongoose

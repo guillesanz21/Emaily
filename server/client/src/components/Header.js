@@ -20,10 +20,13 @@ class Header extends Component {
          default:
             return (
                <React.Fragment>
-                  <li>
+                  <li key="1">
                      <Payments />
                   </li>
-                  <li>
+                  <li key="2" style={{ margin: "0 10px" }}>
+                     Credits: {this.props.auth.credits}
+                  </li>
+                  <li key="3">
                      <a href="/api/logout">Logout</a>
                   </li>
                </React.Fragment>
