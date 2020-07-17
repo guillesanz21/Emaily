@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 // The next requires isn't assigned to any variable since this file it isn't exporting anything, it's just executing it.
 require("./models/User");
+require("./models/Survey");
 require("./services/passport");
 
 mongoose
@@ -32,8 +33,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./routes/authRoutes")(app); // This is invoking the function exported by authRoutes in the routes directory
+// These are invoking the function exported by ***Routes.js in the routes directory
+require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 // Route handler for the react routes. This will only run on production.
 if (process.env.NODE_ENV === "production") {
