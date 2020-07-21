@@ -3,7 +3,7 @@ const helper = sendgrid.mail;
 const keys = require("../config/keys");
 
 class Mailer extends helper.Mail {
-  // We extract the subject and the recipients properties from the survey object
+  // We extract the subject and the recipients properties from the survey object.
   constructor({ subject, recipients }, content) {
     super();
 
