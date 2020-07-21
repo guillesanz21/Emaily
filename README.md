@@ -5,5 +5,5 @@ These are the topics that were addressed in the course in depth:
 1. Joining the react architecture with express in development and in production environments.
 2. Paying with the Stripe library.
 3. Sending a bunch of emails from the app.
-4. Working in development and production environments.
+4. Working in both development and production environments.
 
